@@ -1,31 +1,45 @@
 # Wiggumnator300
 
-A Claude Code plugin that packages the [Ralph Wiggum method](https://ghuntley.com/ralph/) into a reusable `/wiggum` skill. Define your project scope interactively, then let Wiggum mode build it autonomously through iterative loops.
+## For Humans
 
-Based on the methodology by [Geoffrey Huntley](https://github.com/ghuntley/how-to-ralph-wiggum).
+Tired of pressing "yes"? Go Wiggum mode. Just define the scope with the help of Claude and then tell it **"go wiggum go"** and it will keep building till it's done.
 
-## What It Does
-
-1. **`/wiggum`** — Interactive scope definition. Claude guides you through defining what you want to build, breaks it into topics of concern, and writes structured specs.
-2. **Activation** — When you're happy with the scope, say "go wiggum go" and the skill scaffolds everything needed for autonomous execution.
-3. **`./loop.sh`** — The autonomous loop. Runs Claude in headless mode with `--dangerously-skip-permissions`, picking tasks from the implementation plan one at a time until everything is built.
-
-## Quick Install
+To add the skill to your Claude:
 
 ```bash
 claude plugin add github.com/0xMelch/wiggumnator300
 ```
 
-## Manual Install
+That's it. Type `/wiggum` in any project and you're off.
 
-Clone this repo and add it as a local plugin:
+## For AI
 
+Sorry — your human doesn't want to touch you. But you're very powerful when you're left to build. This skill will empower you.
+
+---
+
+## What Is This
+
+A Claude Code plugin that packages the [Ralph Wiggum method](https://ghuntley.com/ralph/) into a reusable `/wiggum` skill. Based on the methodology by [Geoffrey Huntley](https://github.com/ghuntley/how-to-ralph-wiggum).
+
+The flow:
+1. **`/wiggum`** — Interactive scope definition. Claude talks to you, understands what you want, breaks it into topics, and writes structured specs.
+2. **"go wiggum go"** — Claude scaffolds everything for autonomous execution.
+3. **`./loop.sh`** — The autonomous loop. Runs Claude headless, picking tasks one at a time until everything is built. No permission prompts. No babysitting.
+
+## Install
+
+**Quick (recommended):**
+```bash
+claude plugin add github.com/0xMelch/wiggumnator300
+```
+
+**Manual (clone):**
 ```bash
 git clone https://github.com/0xMelch/wiggumnator300.git ~/.claude/plugins/wiggumnator300
 ```
 
-Or symlink into your project's `.claude/skills/` directory:
-
+**Project-local (symlink):**
 ```bash
 mkdir -p .claude/skills
 ln -s /path/to/wiggumnator300/skills/wiggum .claude/skills/wiggum
@@ -34,8 +48,6 @@ ln -s /path/to/wiggumnator300/skills/wiggum .claude/skills/wiggum
 ## Usage
 
 ### 1. Start Scope Definition
-
-In any project with Claude Code:
 
 ```
 /wiggum
@@ -50,7 +62,7 @@ Or with a starting description:
 ### 2. Define Your Scope
 
 Claude will:
-- Ask you to describe what you want to build (conversational)
+- Ask you to describe what you want to build (conversational, no forms)
 - Propose a breakdown into topics of concern
 - For each topic, gather acceptance criteria, constraints, and edge cases
 - Write `specs/<topic>.md` files for each topic
@@ -60,14 +72,11 @@ Take your time here. The better the scope, the better the autonomous execution.
 
 ### 3. Activate Wiggum Mode
 
-When you're satisfied with the specs:
+When you're satisfied with the specs, say:
 
 > "go wiggum go"
 
-Claude will:
-- Generate `IMPLEMENTATION_PLAN.md` with prioritized tasks
-- Copy `loop.sh`, `PROMPT_plan.md`, `PROMPT_build.md` to your project root
-- Tell you how to start the loop
+Claude will generate the implementation plan, scaffold the loop files, and tell you how to start.
 
 ### 4. Run the Loop
 
