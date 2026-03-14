@@ -12,6 +12,37 @@ MODE="build"
 MAX_ITERATIONS=0
 ITERATION=0
 
+# --- Pre-flight checks ---
+
+# 1. Root check: --dangerously-skip-permissions is blocked for root in Claude Code
+if [ "$(id -u)" -eq 0 ]; then
+  echo "ERROR: Running as root is not supported."
+  echo ""
+  echo "Claude Code blocks --dangerously-skip-permissions for the root user."
+  echo "Options:"
+  echo "  1. Run as a non-root user:"
+  echo "     useradd -m wiggum && su - wiggum"
+  echo ""
+  echo "  2. Use the sandbox launcher (recommended):"
+  echo "     ./sandbox.sh"
+  echo ""
+  exit 1
+fi
+
+# 2. Claude CLI check
+if ! command -v claude &>/dev/null; then
+  echo "ERROR: 'claude' command not found."
+  echo "Install Claude Code: npm install -g @anthropic-ai/claude-code"
+  exit 1
+fi
+
+# 3. Auth check (fast — just ask for version with -p)
+if ! claude -p "ok" --output-format text &>/dev/null 2>&1; then
+  echo "ERROR: Claude CLI is not authenticated."
+  echo "Run: claude /login"
+  exit 1
+fi
+
 # Parse arguments
 case "${1:-}" in
   plan)

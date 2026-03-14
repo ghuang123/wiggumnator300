@@ -153,14 +153,13 @@ Write `IMPLEMENTATION_PLAN.md` to the project root as a prioritized bullet list:
 
 ### Step 2 — Scaffold Loop Files
 
-Copy the following files into the project root:
-- `PROMPT_plan.md` — from `${CLAUDE_SKILL_DIR}/prompts/PROMPT_plan.md`
-- `PROMPT_build.md` — from `${CLAUDE_SKILL_DIR}/prompts/PROMPT_build.md`
-- `loop.sh` — from the plugin's `scripts/loop.sh`
+Run the setup script to copy all loop files into the project. Use a **single Bash command** to avoid multiple permission prompts:
 
-Read the source files and write their contents to the project root. Make `loop.sh` executable.
+```bash
+bash "${CLAUDE_SKILL_DIR}/../../scripts/setup.sh" "$(pwd)"
+```
 
-If `AGENTS.md` doesn't already exist (from Step 4 above), create it from the template.
+This copies PROMPT_plan.md, PROMPT_build.md, loop.sh, AGENTS.md (if missing), and IMPLEMENTATION_PLAN.md (if missing) into the project root in one shot. Do NOT manually copy files one by one — that triggers a permission prompt per file.
 
 ### Step 3 — Handoff
 
@@ -172,21 +171,23 @@ Tell the user:
 >
 > To start autonomous execution:
 > ```bash
-> ./loop.sh           # Build mode (default)
-> ./loop.sh plan      # Re-plan before building
-> ./loop.sh plan 3    # Plan for 3 iterations max
-> ./loop.sh 20        # Build for 20 iterations max
+> ./sandbox.sh           # Recommended — runs in Docker as non-root
+> ./sandbox.sh 20        # Build for 20 iterations max
+> ./sandbox.sh plan      # Re-plan before building
 > ```
 >
-> The loop runs with `--dangerously-skip-permissions` so no manual approvals are needed. **Run this in a sandboxed environment** (Docker, VM, etc.) for safety.
+> Or if you're already in a safe non-root environment:
+> ```bash
+> ./loop.sh              # Direct execution (must not be root)
+> ```
 >
 > Files created:
 > - `specs/` — Your requirement specs
 > - `AGENTS.md` — Build/test/lint commands
 > - `IMPLEMENTATION_PLAN.md` — Prioritized task list
-> - `PROMPT_plan.md` — Planning mode prompt
-> - `PROMPT_build.md` — Building mode prompt
+> - `PROMPT_plan.md` / `PROMPT_build.md` — Loop prompts
 > - `loop.sh` — The autonomous loop script
+> - `sandbox.sh` — One-command Docker sandbox launcher
 
 ---
 

@@ -47,9 +47,14 @@ cp "$PLUGIN_DIR/scripts/loop.sh" "$TARGET_DIR/loop.sh"
 chmod +x "$TARGET_DIR/loop.sh"
 echo "  Created loop.sh (executable)"
 
+# Copy sandbox launcher
+cp "$PLUGIN_DIR/scripts/sandbox.sh" "$TARGET_DIR/sandbox.sh"
+chmod +x "$TARGET_DIR/sandbox.sh"
+echo "  Created sandbox.sh (executable)"
+
 echo ""
 echo "Setup complete. Next steps:"
-echo "  1. Run /wiggum in Claude Code to define your scope"
-echo "  2. Or manually create specs in specs/"
-echo "  3. Fill in AGENTS.md with your build/test/lint commands"
-echo "  4. Run ./loop.sh to start Wiggum Mode"
+echo "  1. Fill in AGENTS.md with your build/test/lint commands"
+echo "  2. Write specs in specs/ (or use /wiggum to generate them)"
+echo "  3. Run ./sandbox.sh to start Wiggum Mode in a sandbox"
+echo "     Or: ./loop.sh if you're already in a safe environment as non-root"

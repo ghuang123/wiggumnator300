@@ -89,12 +89,27 @@ Claude will generate the implementation plan, scaffold the loop files, and tell 
 
 ### 4. Run the Loop
 
+**Recommended — use the sandbox launcher:**
+```bash
+./sandbox.sh              # Spins up Docker, runs as non-root, handles everything
+./sandbox.sh 20           # Build mode, 20 iterations max
+./sandbox.sh plan         # Planning mode
+```
+
+The sandbox launcher:
+- Builds a Docker container with Node.js and Claude Code
+- Creates a non-root user (required — `--dangerously-skip-permissions` is blocked for root)
+- Mounts your project and Claude credentials
+- Runs the loop automatically
+
+**Direct execution** (if you're already in a safe non-root environment):
 ```bash
 ./loop.sh              # Build mode, unlimited iterations
 ./loop.sh 20           # Build mode, 20 iterations max
 ./loop.sh plan         # Planning mode (re-analyze specs vs code)
-./loop.sh plan 5       # Planning mode, 5 iterations max
 ```
+
+`loop.sh` has pre-flight checks that will catch common issues (running as root, missing auth, etc.) and tell you exactly what to fix.
 
 Each iteration:
 1. Reads specs and the implementation plan
@@ -104,17 +119,6 @@ Each iteration:
 5. Updates the plan
 6. Commits and pushes
 7. Loop restarts with a fresh context window
-
-### Safety
-
-The loop runs with `--dangerously-skip-permissions`. **Run it in a sandboxed environment:**
-
-- Docker container
-- VM
-- Fly.io / E2B sandbox
-- Hetzner Cloud instance
-
-Don't run it on a machine with sensitive data or credentials beyond what the project needs.
 
 ## Project Structure After Setup
 
@@ -129,6 +133,7 @@ your-project/
 ├── PROMPT_plan.md            # Planning mode prompt
 ├── PROMPT_build.md           # Building mode prompt
 ├── loop.sh                   # The autonomous loop script
+├── sandbox.sh                # One-command Docker sandbox launcher
 └── src/                      # Your application code
 ```
 
