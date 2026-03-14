@@ -1,0 +1,10 @@
+{
+  "name": "wiggumnator300",
+  "description": "Ralph Wiggum Mode — AI-driven autonomous development loops with guided scope definition. Type /wiggum to define your project scope, then let Wiggum mode build it autonomously.",
+  "version": "1.0.0",
+  "author": {
+    "name": "melch"
+  },
+  "keywords": ["ralph-wiggum", "autonomous", "development-loop", "scope-definition", "claude-code"],
+  "skills": "./skills/"
+}
