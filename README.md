@@ -4,10 +4,10 @@
 
 Tired of pressing "yes"? Go Wiggum mode. Just define the scope with the help of Claude and then tell it **"go wiggum go"** and it will keep building till it's done.
 
-To add the skill to your Claude:
+To add the skill to your Claude, run this in your terminal:
 
 ```bash
-claude plugin add github.com/0xMelch/wiggumnator300
+bash <(curl -fsSL https://raw.githubusercontent.com/0xMelch/wiggumnator300/main/scripts/install.sh)
 ```
 
 That's it. Type `/wiggum` in any project and you're off.
@@ -29,20 +29,29 @@ The flow:
 
 ## Install
 
-**Quick (recommended):**
+**One-liner (recommended):**
 ```bash
-claude plugin add github.com/0xMelch/wiggumnator300
+bash <(curl -fsSL https://raw.githubusercontent.com/0xMelch/wiggumnator300/main/scripts/install.sh)
 ```
 
-**Manual (clone):**
+This clones the repo to `~/.claude/.wiggumnator300` and symlinks the skill to `~/.claude/skills/wiggum` so Claude Code discovers it globally.
+
+**Manual:**
 ```bash
-git clone https://github.com/0xMelch/wiggumnator300.git ~/.claude/plugins/wiggumnator300
+git clone https://github.com/0xMelch/wiggumnator300.git ~/.claude/.wiggumnator300
+ln -s ~/.claude/.wiggumnator300/skills/wiggum ~/.claude/skills/wiggum
 ```
 
-**Project-local (symlink):**
+**Project-local (just one repo):**
 ```bash
 mkdir -p .claude/skills
-ln -s /path/to/wiggumnator300/skills/wiggum .claude/skills/wiggum
+git clone https://github.com/0xMelch/wiggumnator300.git /tmp/wiggumnator300
+cp -r /tmp/wiggumnator300/skills/wiggum .claude/skills/wiggum
+```
+
+**Update:**
+```bash
+git -C ~/.claude/.wiggumnator300 pull
 ```
 
 ## Usage
