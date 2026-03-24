@@ -1,0 +1,4 @@
+## 2024-05-18 - [Docker Build Context Exposure]
+**Vulnerability:** Running `docker build -f "$DOCKERFILE" .` exposed the entire project directory to the Docker daemon unnecessarily because no files were needed to be copied from the project for the build. Also, using `$*` within `bash -c` was a command injection vulnerability.
+**Learning:** For Docker builds that only require a Dockerfile and no other files from the host system, the build context shouldn't be exposed. Additionally, passing arguments as a single string string interpolation inside `bash -c` is dangerous and allows malicious inputs to execute arbitrary commands.
+**Prevention:** Always pipe the Dockerfile directly via stdin (e.g., `docker build - < "$DOCKERFILE"`) when the build context isn't needed. Safely pass shell arguments by using `"$@"` inside scripts and specifically with `bash -c` via `bash -c 'exec command "$@"' _ "$@"`.
