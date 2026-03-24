@@ -60,7 +60,8 @@ WORKDIR /home/wiggum/project
 DOCKER
 
 echo "Building sandbox image..."
-docker build -t wiggumnator-sandbox -f "$DOCKERFILE" . --quiet
+# ⚡ Bolt: skip Docker build context upload by piping Dockerfile via stdin
+docker build -t wiggumnator-sandbox - < "$DOCKERFILE" --quiet
 rm -f "$DOCKERFILE"
 
 # --- Find credentials file ---
