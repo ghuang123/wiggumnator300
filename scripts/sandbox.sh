@@ -60,7 +60,7 @@ WORKDIR /home/wiggum/project
 DOCKER
 
 echo "Building sandbox image..."
-docker build -t wiggumnator-sandbox -f "$DOCKERFILE" . --quiet
+docker build -t wiggumnator-sandbox - < "$DOCKERFILE" --quiet
 rm -f "$DOCKERFILE"
 
 # --- Find credentials file ---
@@ -105,7 +105,7 @@ done
 
 DOCKER_ARGS+=(
   wiggumnator-sandbox
-  bash -c "./loop.sh $*"
+  bash -c 'exec ./loop.sh "$@"' _ "$@"
 )
 
 docker "${DOCKER_ARGS[@]}"
