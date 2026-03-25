@@ -21,7 +21,8 @@ if [ -d "$REPO_DIR" ]; then
 else
   echo "Cloning repo..."
   mkdir -p "$(dirname "$REPO_DIR")"
-  git clone "$REPO_URL" "$REPO_DIR"
+  # ⚡ Bolt: Use shallow clone for faster installation and reduced disk usage
+  git clone --depth=1 "$REPO_URL" "$REPO_DIR"
 fi
 
 # Symlink the skill to where Claude Code expects it
