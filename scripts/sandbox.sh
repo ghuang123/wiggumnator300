@@ -23,9 +23,9 @@ if ! command -v docker &>/dev/null; then
   exit 1
 fi
 
-if [ ! -f "$CLAUDE_DIR/.credentials.json" ] && [ ! -f "$CLAUDE_DIR/credentials.json" ]; then
-  echo "ERROR: No Claude credentials found at $CLAUDE_DIR"
-  echo "Run 'claude /login' first, then try again."
+if [ -z "${ANTHROPIC_API_KEY:-}" ] && [ -z "${CLAUDE_API_KEY:-}" ] && [ ! -f "$CLAUDE_DIR/.credentials.json" ] && [ ! -f "$CLAUDE_DIR/credentials.json" ]; then
+  echo "ERROR: No Claude credentials found at $CLAUDE_DIR and no API key environment variables set."
+  echo "Run 'claude /login' first, or set ANTHROPIC_API_KEY, then try again."
   exit 1
 fi
 
