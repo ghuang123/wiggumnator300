@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+CYAN='\033[0;36m'
+YELLOW='\033[0;33m'
+NC='\033[0m' # No Color
+
 # Wiggumnator300 — Ralph Wiggum Mode Loop
 # Usage:
 #   ./loop.sh              # Build mode, unlimited iterations
@@ -16,9 +22,9 @@ ITERATION=0
 
 # 1. Root check: --dangerously-skip-permissions is blocked for root in Claude Code
 if [ "$(id -u)" -eq 0 ]; then
-  echo "ERROR: Running as root is not supported."
+  echo -e "${RED}ERROR: Running as root is not supported.${NC}"
   echo ""
-  echo "Claude Code blocks --dangerously-skip-permissions for the root user."
+  echo -e "${YELLOW}Claude Code blocks --dangerously-skip-permissions for the root user.${NC}"
   echo "Options:"
   echo "  1. Run as a non-root user:"
   echo "     useradd -m wiggum && su - wiggum"
@@ -31,14 +37,14 @@ fi
 
 # 2. Claude CLI check
 if ! command -v claude &>/dev/null; then
-  echo "ERROR: 'claude' command not found."
+  echo -e "${RED}ERROR: 'claude' command not found.${NC}"
   echo "Install Claude Code: npm install -g @anthropic-ai/claude-code"
   exit 1
 fi
 
 # 3. Auth check (fast — just ask for version with -p)
 if ! claude -p "ok" --output-format text &>/dev/null 2>&1; then
-  echo "ERROR: Claude CLI is not authenticated."
+  echo -e "${RED}ERROR: Claude CLI is not authenticated.${NC}"
   echo "Run: claude /login"
   exit 1
 fi
@@ -77,22 +83,22 @@ fi
 
 # Verify prompt file exists
 if [ ! -f "$PROMPT_FILE" ]; then
-  echo "Error: $PROMPT_FILE not found in current directory."
+  echo -e "${RED}Error: $PROMPT_FILE not found in current directory.${NC}"
   echo "Run /wiggum in Claude Code first to set up your project."
   exit 1
 fi
 
-echo "============================================"
-echo "  WIGGUMNATOR 300 — Ralph Wiggum Mode"
-echo "============================================"
-echo "  Mode: $MODE"
+echo -e "${CYAN}============================================${NC}"
+echo -e "${CYAN}  WIGGUMNATOR 300 — Ralph Wiggum Mode${NC}"
+echo -e "${CYAN}============================================${NC}"
+echo -e "  Mode: ${GREEN}$MODE${NC}"
 if [ "$MAX_ITERATIONS" -gt 0 ]; then
-  echo "  Max iterations: $MAX_ITERATIONS"
+  echo -e "  Max iterations: ${GREEN}$MAX_ITERATIONS${NC}"
 else
-  echo "  Max iterations: unlimited"
+  echo -e "  Max iterations: ${GREEN}unlimited${NC}"
 fi
-echo "  Prompt: $PROMPT_FILE"
-echo "============================================"
+echo -e "  Prompt: ${GREEN}$PROMPT_FILE${NC}"
+echo -e "${CYAN}============================================${NC}"
 echo ""
 
 while true; do
@@ -101,21 +107,21 @@ while true; do
   # Check iteration limit
   if [ "$MAX_ITERATIONS" -gt 0 ] && [ "$ITERATION" -gt "$MAX_ITERATIONS" ]; then
     echo ""
-    echo "Reached maximum iterations ($MAX_ITERATIONS). Stopping."
+    echo -e "${YELLOW}Reached maximum iterations ($MAX_ITERATIONS). Stopping.${NC}"
     break
   fi
 
   echo ""
-  echo "--- Iteration $ITERATION $([ "$MAX_ITERATIONS" -gt 0 ] && echo "of $MAX_ITERATIONS" || echo "") ---"
+  echo -e "${CYAN}--- Iteration $ITERATION $([ "$MAX_ITERATIONS" -gt 0 ] && echo "of $MAX_ITERATIONS" || echo "") ---${NC}"
   echo "Started at: $(date)"
   echo ""
 
   # Feed prompt to Claude in headless mode
-  cat "$PROMPT_FILE" | claude -p \
+  claude -p \
     --dangerously-skip-permissions \
     --output-format stream-json \
     --model opus \
-    --verbose
+    --verbose < "$PROMPT_FILE"
 
   EXIT_CODE=$?
 
@@ -124,10 +130,10 @@ while true; do
 
   # Push changes after each iteration
   if git diff --quiet HEAD 2>/dev/null; then
-    echo "No new commits to push."
+    echo -e "${YELLOW}No new commits to push.${NC}"
   else
-    echo "Pushing changes..."
-    git push 2>/dev/null || echo "Push failed (non-fatal). Continuing."
+    echo -e "${GREEN}Pushing changes...${NC}"
+    git push 2>/dev/null || echo -e "${RED}Push failed (non-fatal). Continuing.${NC}"
   fi
 
   # Brief pause between iterations
@@ -135,6 +141,6 @@ while true; do
 done
 
 echo ""
-echo "============================================"
-echo "  Wiggum Mode complete after $ITERATION iterations"
-echo "============================================"
+echo -e "${CYAN}============================================${NC}"
+echo -e "${GREEN}  Wiggum Mode complete after $ITERATION iterations${NC}"
+echo -e "${CYAN}============================================${NC}"
