@@ -36,10 +36,12 @@ if ! command -v claude &>/dev/null; then
   exit 1
 fi
 
-# 3. Auth check (fast — just ask for version with -p)
-if ! claude -p "ok" --output-format text &>/dev/null 2>&1; then
-  echo "ERROR: Claude CLI is not authenticated."
-  echo "Run: claude /login"
+# 3. Auth check (instant — check for credentials file or env vars)
+# ⚡ Bolt: Check for credentials file or API keys instead of making an API call to save 1-3 seconds
+CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
+if [ -z "${ANTHROPIC_API_KEY:-}" ] && [ -z "${CLAUDE_API_KEY:-}" ] && [ ! -f "$CLAUDE_DIR/.credentials.json" ] && [ ! -f "$CLAUDE_DIR/credentials.json" ]; then
+  echo "ERROR: No Claude credentials found at $CLAUDE_DIR and no API key environment variables set."
+  echo "Run: claude /login or export ANTHROPIC_API_KEY=..."
   exit 1
 fi
 
