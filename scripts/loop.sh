@@ -111,11 +111,12 @@ while true; do
   echo ""
 
   # Feed prompt to Claude in headless mode
-  cat "$PROMPT_FILE" | claude -p \
+  # ⚡ Bolt: Use input redirection (< "$PROMPT_FILE") instead of 'cat "$PROMPT_FILE" |' to avoid spawning an unnecessary subshell and 'cat' process, improving loop iteration speed.
+  claude -p \
     --dangerously-skip-permissions \
     --output-format stream-json \
     --model opus \
-    --verbose
+    --verbose < "$PROMPT_FILE"
 
   EXIT_CODE=$?
 
