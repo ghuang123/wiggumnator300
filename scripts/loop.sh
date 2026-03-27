@@ -111,7 +111,7 @@ while true; do
   echo ""
 
   # Feed prompt to Claude in headless mode
-  cat "$PROMPT_FILE" | claude -p \
+  claude -p < "$PROMPT_FILE" \
     --dangerously-skip-permissions \
     --output-format stream-json \
     --model opus \
