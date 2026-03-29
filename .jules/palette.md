@@ -1,0 +1,3 @@
+## 2024-05-24 - [Improve CLI error message scannability]
+**Learning:** CLI tools benefit from visual hierarchy and actionable steps in error outputs. Adding emojis (like ❌ for errors and 👉 for actionable steps) makes messages more scannable and provides a better developer experience (DX).
+**Action:** Always include visual cues and clear actionable steps in CLI error messages to improve scannability and user experience.
