@@ -16,14 +16,15 @@ ITERATION=0
 
 # 1. Root check: --dangerously-skip-permissions is blocked for root in Claude Code
 if [ "$(id -u)" -eq 0 ]; then
-  echo "ERROR: Running as root is not supported."
+  echo "❌ ERROR: Running as root is not supported."
   echo ""
-  echo "Claude Code blocks --dangerously-skip-permissions for the root user."
-  echo "Options:"
-  echo "  1. Run as a non-root user:"
+  echo "🛡️ Claude Code blocks --dangerously-skip-permissions for the root user."
+  echo ""
+  echo "💡 Options:"
+  echo "  1️⃣ Run as a non-root user:"
   echo "     useradd -m wiggum && su - wiggum"
   echo ""
-  echo "  2. Use the sandbox launcher (recommended):"
+  echo "  2️⃣ Use the sandbox launcher (recommended):"
   echo "     ./sandbox.sh"
   echo ""
   exit 1
