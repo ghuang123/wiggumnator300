@@ -1,0 +1,4 @@
+## 2026-03-30 - [Command injection vulnerability via `$*` in shell execution]
+**Vulnerability:** Command injection vulnerability in `scripts/sandbox.sh` due to passing `$*` inside a `bash -c` command string (`bash -c "./loop.sh $*"`). An attacker controlling the arguments could execute arbitrary commands.
+**Learning:** Shell arguments passed using string interpolation like `$*` can be interpreted by the shell unexpectedly, enabling command execution. This pattern is dangerous when dealing with user-controlled input.
+**Prevention:** To avoid command injection in the future, pass shell arguments securely to bash subshells by keeping them as separate arguments. Use `bash -c 'cmd "$@"' -- "$@"` instead of interpolating `$*` directly.
