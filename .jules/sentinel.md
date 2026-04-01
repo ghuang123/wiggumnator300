@@ -1,0 +1,4 @@
+## 2024-04-01 - Command Injection in bash -c argument passing
+**Vulnerability:** Found a command injection vulnerability where script arguments were passed into a `bash -c` subshell using string interpolation `bash -c "./loop.sh $*"`.
+**Learning:** This approach allows malicious inputs or specifically crafted arguments (like shell metacharacters or nested commands) to be interpreted by the new shell execution environment, leading to remote code execution. It's a common but risky pattern when wrapping execution.
+**Prevention:** To prevent command injection vulnerabilities, shell arguments must be passed securely by passing them as arguments to the `bash -c` command directly using `"$@"` and using single quotes for the inner command so the outer shell does not interpolate variables, like: `bash -c 'cmd "$@"' -- "$@"`.
