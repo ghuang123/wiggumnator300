@@ -18,19 +18,19 @@ CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 # --- Pre-flight ---
 
 if ! command -v docker &>/dev/null; then
-  echo "ERROR: Docker not found. Install Docker to use the sandbox."
-  echo "https://docs.docker.com/get-docker/"
+  echo "❌ ERROR: Docker not found. Install Docker to use the sandbox."
+  echo "💡 https://docs.docker.com/get-docker/"
   exit 1
 fi
 
 if [ ! -f "$CLAUDE_DIR/.credentials.json" ] && [ ! -f "$CLAUDE_DIR/credentials.json" ]; then
-  echo "ERROR: No Claude credentials found at $CLAUDE_DIR"
-  echo "Run 'claude /login' first, then try again."
+  echo "❌ ERROR: No Claude credentials found at $CLAUDE_DIR"
+  echo "💡 Run 'claude /login' first, then try again."
   exit 1
 fi
 
 if [ ! -f "PROMPT_build.md" ] && [ ! -f "PROMPT_plan.md" ]; then
-  echo "ERROR: No prompt files found. Run /wiggum in Claude Code first to set up your project."
+  echo "❌ ERROR: No prompt files found. Run /wiggum in Claude Code first to set up your project."
   exit 1
 fi
 
