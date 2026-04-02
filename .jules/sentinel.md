@@ -1,0 +1,4 @@
+## 2025-01-20 - Command Injection via Unsafe Shell Argument Interpolation
+**Vulnerability:** Found `bash -c "./loop.sh $*"` inside the `DOCKER_ARGS` array in `scripts/sandbox.sh`. This interpolates all arguments into the string before executing it with `bash -c`, which allows an attacker to break out of the string and execute arbitrary commands by passing special characters or spaces.
+**Learning:** Shell argument interpolation (`$*` or `$@` inside double quotes passed to `bash -c`) is a common pattern for passing arguments but is highly unsafe if the arguments contain shell metacharacters or spaces, leading to command injection vulnerabilities.
+**Prevention:** To prevent command injection, always pass shell arguments securely to `bash -c` by placing them outside the command string and accessing them as positional parameters within the command string, and using `--` to signify the end of options (e.g., `bash -c 'cmd "$@"' -- "$@"`).
