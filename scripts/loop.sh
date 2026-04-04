@@ -110,12 +110,13 @@ while true; do
   echo "Started at: $(date)"
   echo ""
 
+  # ⚡ Bolt: skip useless cat and avoid spawning an extra process
   # Feed prompt to Claude in headless mode
-  cat "$PROMPT_FILE" | claude -p \
+  claude -p \
     --dangerously-skip-permissions \
     --output-format stream-json \
     --model opus \
-    --verbose
+    --verbose < "$PROMPT_FILE"
 
   EXIT_CODE=$?
 
