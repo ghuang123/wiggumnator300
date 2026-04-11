@@ -104,9 +104,11 @@ for var in ANTHROPIC_API_KEY CLAUDE_API_KEY; do
   fi
 done
 
+# 🛡️ Sentinel: Prevent command injection by passing arguments securely
+args=("$@")
 DOCKER_ARGS+=(
   wiggumnator-sandbox
-  bash -c "./loop.sh $*"
+  bash -c '"./loop.sh" "$@"' -- "${args[@]}"
 )
 
 docker "${DOCKER_ARGS[@]}"
