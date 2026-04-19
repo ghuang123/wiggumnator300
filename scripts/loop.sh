@@ -16,10 +16,10 @@ ITERATION=0
 
 # 1. Root check: --dangerously-skip-permissions is blocked for root in Claude Code
 if [ "$(id -u)" -eq 0 ]; then
-  echo "ERROR: Running as root is not supported."
+  echo "🛑 ERROR: Running as root is not supported."
   echo ""
   echo "Claude Code blocks --dangerously-skip-permissions for the root user."
-  echo "Options:"
+  echo "💡 Options:"
   echo "  1. Run as a non-root user:"
   echo "     useradd -m wiggum && su - wiggum"
   echo ""
@@ -31,15 +31,15 @@ fi
 
 # 2. Claude CLI check
 if ! command -v claude &>/dev/null; then
-  echo "ERROR: 'claude' command not found."
-  echo "Install Claude Code: npm install -g @anthropic-ai/claude-code"
+  echo "🛑 ERROR: 'claude' command not found."
+  echo "💡 Action: Install Claude Code: npm install -g @anthropic-ai/claude-code"
   exit 1
 fi
 
 # 3. Auth check (fast — just ask for version with -p)
 if ! claude -p "ok" --output-format text &>/dev/null 2>&1; then
-  echo "ERROR: Claude CLI is not authenticated."
-  echo "Run: claude /login"
+  echo "🛑 ERROR: Claude CLI is not authenticated."
+  echo "💡 Action: Run: claude /login"
   exit 1
 fi
 
@@ -77,8 +77,8 @@ fi
 
 # Verify prompt file exists
 if [ ! -f "$PROMPT_FILE" ]; then
-  echo "Error: $PROMPT_FILE not found in current directory."
-  echo "Run /wiggum in Claude Code first to set up your project."
+  echo "🛑 ERROR: $PROMPT_FILE not found in current directory."
+  echo "💡 Action: Run /wiggum in Claude Code first to set up your project."
   exit 1
 fi
 
