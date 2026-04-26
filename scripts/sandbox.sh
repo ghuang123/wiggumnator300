@@ -100,13 +100,15 @@ fi
 # Pass through any API keys that might be set
 for var in ANTHROPIC_API_KEY CLAUDE_API_KEY; do
   if [ -n "${!var:-}" ]; then
-    DOCKER_ARGS+=(-e "$var=${!var}")
+    # Securely pass env vars without leaking to ps
+    DOCKER_ARGS+=(-e "$var")
   fi
 done
 
 DOCKER_ARGS+=(
   wiggumnator-sandbox
-  bash -c "./loop.sh $*"
+  # Prevent command injection by passing arguments securely
+  bash -c './loop.sh "$@"' -- "$@"
 )
 
 docker "${DOCKER_ARGS[@]}"
