@@ -100,13 +100,13 @@ fi
 # Pass through any API keys that might be set
 for var in ANTHROPIC_API_KEY CLAUDE_API_KEY; do
   if [ -n "${!var:-}" ]; then
-    DOCKER_ARGS+=(-e "$var=${!var}")
+    DOCKER_ARGS+=(-e "$var")
   fi
 done
 
 DOCKER_ARGS+=(
   wiggumnator-sandbox
-  bash -c "./loop.sh $*"
+  bash -c './loop.sh "$@"' -- "$@"
 )
 
 docker "${DOCKER_ARGS[@]}"
