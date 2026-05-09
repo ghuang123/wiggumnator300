@@ -5,3 +5,6 @@
 ## 2024-10-18 - [Avoid useless cat pipes in loops]
 **Learning:** Using a `cat file | cmd` pipe inside a loop spawns unnecessary subshells and processes for `cat` in every iteration, causing measurable overhead.
 **Action:** Always use input redirection (`cmd < file`) instead of piping `cat` output, especially inside loops, to optimize shell script execution.
+## 2026-05-09 - [Avoid mktemp for command stdin]
+**Learning:** Using mktemp to create a temporary file just to pass multi-line string content to a command's stdin is an anti-pattern. It introduces unnecessary disk I/O and requires manual cleanup.
+**Action:** Use here-documents directly with the command (`cmd <<'EOF'`) to pass multi-line string content to a process, eliminating temporary file creation and cleanup.
