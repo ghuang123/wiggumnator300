@@ -29,7 +29,7 @@ mkdir -p "$HOME/.claude/skills"
 if [ -L "$SKILL_DIR" ]; then
   rm "$SKILL_DIR"
 elif [ -d "$SKILL_DIR" ]; then
-  echo "Warning: $SKILL_DIR already exists as a directory. Backing up to ${SKILL_DIR}.bak"
+  echo "⚠️ Warning: $SKILL_DIR already exists as a directory. Backing up to ${SKILL_DIR}.bak"
   mv "$SKILL_DIR" "${SKILL_DIR}.bak"
 fi
 
@@ -40,5 +40,5 @@ echo "Installed:"
 echo "  Repo:  $REPO_DIR"
 echo "  Skill: $SKILL_DIR -> $(readlink "$SKILL_DIR")"
 echo ""
-echo "Type /wiggum in any Claude Code session to get started."
-echo "To update later: git -C $REPO_DIR pull"
+echo "💡 Type /wiggum in any Claude Code session to get started."
+echo "💡 To update later: git -C $REPO_DIR pull"
