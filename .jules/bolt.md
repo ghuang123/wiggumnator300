@@ -5,3 +5,6 @@
 ## 2024-10-18 - [Avoid useless cat pipes in loops]
 **Learning:** Using a `cat file | cmd` pipe inside a loop spawns unnecessary subshells and processes for `cat` in every iteration, causing measurable overhead.
 **Action:** Always use input redirection (`cmd < file`) instead of piping `cat` output, especially inside loops, to optimize shell script execution.
+## 2026-05-29 - [Avoid temporary files for dynamic Dockerfiles]
+**Learning:** Creating temporary files (like with `mktemp`) to store dynamically generated Dockerfiles before passing them to `docker build` introduces unnecessary disk I/O and process overhead.
+**Action:** Pipe a heredoc directly to `docker build` via stdin (e.g., `docker build - <<'DOCKER'`) to eliminate the need for `mktemp` and `rm`, improving build script performance.
