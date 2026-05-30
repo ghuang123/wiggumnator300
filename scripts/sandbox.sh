@@ -104,9 +104,10 @@ for var in ANTHROPIC_API_KEY CLAUDE_API_KEY; do
   fi
 done
 
+# Securely pass arguments to subshell to prevent command injection
 DOCKER_ARGS+=(
   wiggumnator-sandbox
-  bash -c "./loop.sh $*"
+  bash -c './loop.sh "$@"' dummy "$@"
 )
 
 docker "${DOCKER_ARGS[@]}"
