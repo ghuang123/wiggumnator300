@@ -5,3 +5,6 @@
 ## 2024-10-18 - [Avoid useless cat pipes in loops]
 **Learning:** Using a `cat file | cmd` pipe inside a loop spawns unnecessary subshells and processes for `cat` in every iteration, causing measurable overhead.
 **Action:** Always use input redirection (`cmd < file`) instead of piping `cat` output, especially inside loops, to optimize shell script execution.
+## 2026-06-01 - [Micro-optimizations with no measurable impact]
+**Learning:** Removing mktemp for a temporary dockerfile in favor of directly piping heredoc is a micro-optimization with zero measurable performance impact, especially compared to the time it takes to build a docker container.
+**Action:** Avoid submitting micro-optimizations that don't provide a measurable performance benefit. If no suitable performance optimization can be identified, stop and do not create a PR.
