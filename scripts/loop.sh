@@ -37,7 +37,11 @@ if ! command -v claude &>/dev/null; then
 fi
 
 # 3. Auth check (fast — just ask for version with -p)
-if ! claude -p "ok" --output-format text &>/dev/null 2>&1; then
+# ⚡ Bolt: Fast optimistic check for credentials to avoid slow Node.js process startup
+CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
+if [ -n "${ANTHROPIC_API_KEY:-}" ] || [ -n "${CLAUDE_API_KEY:-}" ] || [ -f "$CLAUDE_DIR/.credentials.json" ] || [ -f "$CLAUDE_DIR/credentials.json" ]; then
+  : # Fast path successful, assume authenticated
+elif ! claude -p "ok" --output-format text &>/dev/null 2>&1; then
   echo "ERROR: Claude CLI is not authenticated."
   echo "Run: claude /login"
   exit 1
