@@ -5,3 +5,6 @@
 ## 2024-10-18 - [Avoid useless cat pipes in loops]
 **Learning:** Using a `cat file | cmd` pipe inside a loop spawns unnecessary subshells and processes for `cat` in every iteration, causing measurable overhead.
 **Action:** Always use input redirection (`cmd < file`) instead of piping `cat` output, especially inside loops, to optimize shell script execution.
+## 2026-06-05 - [Optimize CLI auth checks with fast path]
+**Learning:** Completely replacing a CLI shell-out with a direct file check trades correctness for speed. However, spinning up Node.js for a robust check on every loop is too slow.
+**Action:** Always use a hybrid approach: perform a fast optimistic file/environment check first, but fallback to the robust CLI check if the fast path fails.
