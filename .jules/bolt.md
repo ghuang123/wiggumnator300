@@ -5,3 +5,6 @@
 ## 2024-10-18 - [Avoid useless cat pipes in loops]
 **Learning:** Using a `cat file | cmd` pipe inside a loop spawns unnecessary subshells and processes for `cat` in every iteration, causing measurable overhead.
 **Action:** Always use input redirection (`cmd < file`) instead of piping `cat` output, especially inside loops, to optimize shell script execution.
+## 2026-06-07 - [Optimizing slow Node.js CLI startup in auth checks]
+**Learning:** Shelling out to Node.js CLIs (like `claude`) for simple checks (e.g., authentication) introduces significant overhead (often 500ms+) due to process and VM startup time, which blocks script execution unnecessarily.
+**Action:** When validating authentication or state that relies on a slow CLI, use a hybrid approach: perform a fast optimistic check for environment variables or credential files first, and only fallback to the robust CLI check if the fast path fails.
