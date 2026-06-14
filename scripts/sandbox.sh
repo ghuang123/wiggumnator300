@@ -104,9 +104,10 @@ for var in ANTHROPIC_API_KEY CLAUDE_API_KEY; do
   fi
 done
 
+# 🛡️ Sentinel: Prevent command injection by passing arguments out-of-band instead of interpolating into the bash command string
 DOCKER_ARGS+=(
   wiggumnator-sandbox
-  bash -c "./loop.sh $*"
+  bash -c './loop.sh "$@"' dummy "$@"
 )
 
 docker "${DOCKER_ARGS[@]}"
