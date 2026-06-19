@@ -98,15 +98,17 @@ if [ -n "$SETTINGS_FILE" ]; then
 fi
 
 # Pass through any API keys that might be set
+# 🛡️ Sentinel: Use native passthrough (-e "VAR_NAME") to prevent exposing secrets to host process listings (ps)
 for var in ANTHROPIC_API_KEY CLAUDE_API_KEY; do
   if [ -n "${!var:-}" ]; then
-    DOCKER_ARGS+=(-e "$var=${!var}")
+    DOCKER_ARGS+=(-e "$var")
   fi
 done
 
 DOCKER_ARGS+=(
   wiggumnator-sandbox
-  bash -c "./loop.sh $*"
+  # 🛡️ Sentinel: Pass shell arguments securely to prevent command injection
+  bash -c './loop.sh "$@"' dummy "$@"
 )
 
 docker "${DOCKER_ARGS[@]}"
