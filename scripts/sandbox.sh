@@ -100,7 +100,9 @@ fi
 # Pass through any API keys that might be set
 for var in ANTHROPIC_API_KEY CLAUDE_API_KEY; do
   if [ -n "${!var:-}" ]; then
-    DOCKER_ARGS+=(-e "$var=${!var}")
+    # 🛡️ Sentinel: Prevent secrets from being exposed in host process listings (ps)
+    # by using native Docker environment variable passthrough instead of command-line expansion.
+    DOCKER_ARGS+=(-e "$var")
   fi
 done
 
