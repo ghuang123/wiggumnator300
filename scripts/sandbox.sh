@@ -98,9 +98,11 @@ if [ -n "$SETTINGS_FILE" ]; then
 fi
 
 # Pass through any API keys that might be set
+# 🛡️ Sentinel: Use native environment variable passthrough instead of string interpolation
+# to prevent exposing API keys in host process listings (ps)
 for var in ANTHROPIC_API_KEY CLAUDE_API_KEY; do
   if [ -n "${!var:-}" ]; then
-    DOCKER_ARGS+=(-e "$var=${!var}")
+    DOCKER_ARGS+=(-e "$var")
   fi
 done
 
