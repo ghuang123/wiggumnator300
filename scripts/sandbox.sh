@@ -97,16 +97,17 @@ if [ -n "$SETTINGS_FILE" ]; then
   DOCKER_ARGS+=(-v "$SETTINGS_FILE:/home/wiggum/.claude/settings.json:ro")
 fi
 
-# Pass through any API keys that might be set
+# Pass through any API keys that might be set securely without exposing them in process lists
 for var in ANTHROPIC_API_KEY CLAUDE_API_KEY; do
   if [ -n "${!var:-}" ]; then
-    DOCKER_ARGS+=(-e "$var=${!var}")
+    DOCKER_ARGS+=(-e "$var")
   fi
 done
 
 DOCKER_ARGS+=(
   wiggumnator-sandbox
-  bash -c "./loop.sh $*"
+  # Pass shell arguments securely to subshell to prevent command injection
+  bash -c './loop.sh "$@"' dummy "$@"
 )
 
 docker "${DOCKER_ARGS[@]}"
