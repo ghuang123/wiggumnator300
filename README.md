@@ -38,14 +38,14 @@ This clones the repo to `~/.claude/.wiggumnator300` and symlinks the skill to `~
 
 **Manual:**
 ```bash
-git clone https://github.com/0xMelch/wiggumnator300.git ~/.claude/.wiggumnator300
+git clone --depth 1 https://github.com/0xMelch/wiggumnator300.git ~/.claude/.wiggumnator300
 ln -s ~/.claude/.wiggumnator300/skills/wiggum ~/.claude/skills/wiggum
 ```
 
 **Project-local (just one repo):**
 ```bash
 mkdir -p .claude/skills
-git clone https://github.com/0xMelch/wiggumnator300.git /tmp/wiggumnator300
+git clone --depth 1 https://github.com/0xMelch/wiggumnator300.git /tmp/wiggumnator300
 cp -r /tmp/wiggumnator300/skills/wiggum .claude/skills/wiggum
 ```
 
