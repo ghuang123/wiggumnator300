@@ -100,7 +100,8 @@ fi
 # Pass through any API keys that might be set
 for var in ANTHROPIC_API_KEY CLAUDE_API_KEY; do
   if [ -n "${!var:-}" ]; then
-    DOCKER_ARGS+=(-e "$var=${!var}")
+    # 🛡️ Sentinel: Pass env var natively instead of interpolating to prevent exposing API keys in host process listings (ps)
+    DOCKER_ARGS+=(-e "$var")
   fi
 done
 
