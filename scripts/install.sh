@@ -16,10 +16,10 @@ echo ""
 
 # Clone or update the repo
 if [ -d "$REPO_DIR" ]; then
-  echo "Updating existing installation..."
+  echo "⏳ Updating existing installation..."
   git -C "$REPO_DIR" pull --ff-only
 else
-  echo "Cloning repo..."
+  echo "⏳ Cloning repo..."
   mkdir -p "$(dirname "$REPO_DIR")"
   git clone "$REPO_URL" "$REPO_DIR"
 fi
@@ -36,9 +36,9 @@ fi
 ln -s "$REPO_DIR/skills/wiggum" "$SKILL_DIR"
 
 echo ""
-echo "Installed:"
+echo "✅ Installed:"
 echo "  Repo:  $REPO_DIR"
 echo "  Skill: $SKILL_DIR -> $(readlink "$SKILL_DIR")"
 echo ""
-echo "Type /wiggum in any Claude Code session to get started."
-echo "To update later: git -C $REPO_DIR pull"
+echo "💡 Type /wiggum in any Claude Code session to get started."
+echo "💡 To update later: git -C $REPO_DIR pull"
