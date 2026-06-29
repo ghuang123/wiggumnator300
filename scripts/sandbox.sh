@@ -100,7 +100,8 @@ fi
 # Pass through any API keys that might be set
 for var in ANTHROPIC_API_KEY CLAUDE_API_KEY; do
   if [ -n "${!var:-}" ]; then
-    DOCKER_ARGS+=(-e "$var=${!var}")
+    # Security Fix: Use native passthrough for sensitive env vars to prevent exposure in process listings (ps)
+    DOCKER_ARGS+=(-e "$var")
   fi
 done
 
