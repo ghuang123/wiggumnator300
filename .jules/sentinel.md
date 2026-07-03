@@ -1,0 +1,4 @@
+## 2026-07-03 - Prevent API Key Exposure in Process Listings
+**Vulnerability:** API keys were passed to Docker containers using explicit interpolation (-e "VAR_NAME=$VAR_NAME"), which exposes the secret values in host process listings (ps). In addition, shell arguments were unsafely interpolated into a subshell string (bash -c "./loop.sh $*"), posing a command injection risk.
+**Learning:** Shell expansion during array population evaluates and includes the literal secret values in the command arguments. Similarly, interpolating $* directly into a shell command string allows arbitrary code execution if arguments contain shell metacharacters.
+**Prevention:** Always use Docker's native environment variable passthrough (-e VAR_NAME) without the =value part. For subshells, pass arguments securely out-of-band using bash -c 'cmd "$@"' dummy "$@".
