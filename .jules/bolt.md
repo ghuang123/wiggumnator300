@@ -5,3 +5,7 @@
 ## 2024-10-18 - [Avoid useless cat pipes in loops]
 **Learning:** Using a `cat file | cmd` pipe inside a loop spawns unnecessary subshells and processes for `cat` in every iteration, causing measurable overhead.
 **Action:** Always use input redirection (`cmd < file`) instead of piping `cat` output, especially inside loops, to optimize shell script execution.
+
+## 2026-07-06 - [Use shallow clones for faster installation]
+**Learning:** Downloading the entire git history using `git clone` can take a long time, use a large amount of network bandwidth and disk space, especially for large repositories or over slow networks.
+**Action:** Always utilize a shallow clone (`--depth 1`) instead of a full clone when installing or pulling a repository where git history isn't needed, such as when executing an installation script.
