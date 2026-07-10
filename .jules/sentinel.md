@@ -1,0 +1,4 @@
+## 2026-07-10 - Prevent Command Injection and Secret Exposure in Sandbox
+**Vulnerability:** Shell arguments were interpolated directly into a bash command (`bash -c "./loop.sh $*"`), allowing command injection. Additionally, API keys were passed to Docker using explicit interpolation (`-e "$var=${!var}"`), exposing them to host process listings (`ps`).
+**Learning:** Even within isolated environments or single-purpose wrapper scripts, direct interpolation of $* into a subshell string evaluates special characters instead of treating them as literal arguments. Docker environment variable assignment via `-e` displays the full string in the command line if interpolated by the shell.
+**Prevention:** Always pass arguments to subshells securely out-of-band using positional parameters (e.g., `bash -c 'cmd "$@"' dummy "$@"`). Use Docker's native environment variable passthrough (`-e "VAR_NAME"`) to prevent exposing secrets in the host's process list.
