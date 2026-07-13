@@ -1,0 +1,4 @@
+## 2026-07-13 - Prevent API Key Exposure and Command Injection in Docker Sandbox
+**Vulnerability:** Passing sensitive environment variables to the Docker sandbox using explicit interpolation (`-e "VAR=$VAR"`) exposes API keys to host process listings (`ps`). Additionally, passing arguments to the container using `bash -c "./loop.sh $*"` allows for command injection and word-splitting issues.
+**Learning:** The Docker CLI natively supports passing environment variables without values (`-e "VAR"`) to securely inherit them from the host without exposing their contents on the command line. For subshells, arguments must be passed securely out-of-band using positional parameters instead of direct interpolation.
+**Prevention:** Always use `-e "VAR_NAME"` for sensitive passthrough in Docker commands and `bash -c 'cmd "$@"' dummy "$@"` for forwarding arguments safely.
