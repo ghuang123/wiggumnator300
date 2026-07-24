@@ -1,0 +1,4 @@
+## 2026-07-24 - Prevent Secret Exposure and Command Injection in Docker Scripts
+**Vulnerability:** API keys passed to Docker via `-e "VAR=$VAR"` were visible in host process listings (`ps aux`), and passing script arguments directly into `bash -c "cmd $*"` allowed potential command injection through untrusted input.
+**Learning:** Shell command lines and Docker arguments are often visible to all users on the host system. Furthermore, interpolating $* inside a double-quoted `bash -c` string can result in the execution of unintended commands.
+**Prevention:** Pass sensitive environment variables to Docker using native passthrough (`-e "VAR"`) so their values aren't in the command line arguments, and pass arguments to subshells out-of-band using positional parameters (`bash -c 'cmd "$@"' dummy "$@"`).
