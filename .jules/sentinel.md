@@ -1,0 +1,4 @@
+## 2026-07-25 - Prevent Command Injection and Secret Exposure in Bash and Docker
+**Vulnerability:** Shell arguments were interpolated directly into a bash string (`bash -c "./loop.sh $*"`), enabling command injection, and API keys were passed to Docker explicitly (`-e "VAR=$VAR"`), exposing them to host process lists via `ps`.
+**Learning:** Command arguments should always be passed out-of-band to subshells using positional parameters (e.g., `bash -c 'cmd "$@"' dummy "$@"`), and Docker environment variables should be inherited natively (e.g., `-e "VAR"`) to prevent secret leakage in process arguments.
+**Prevention:** Always use safe array expansion/positional parameters instead of direct string interpolation for subshells, and use Docker's native environment variable passthrough for secrets.
