@@ -29,14 +29,14 @@ mkdir -p "$HOME/.claude/skills"
 if [ -L "$SKILL_DIR" ]; then
   rm "$SKILL_DIR"
 elif [ -d "$SKILL_DIR" ]; then
-  echo "Warning: $SKILL_DIR already exists as a directory. Backing up to ${SKILL_DIR}.bak"
+  echo "⚠️ Warning: $SKILL_DIR already exists as a directory. Backing up to ${SKILL_DIR}.bak"
   mv "$SKILL_DIR" "${SKILL_DIR}.bak"
 fi
 
 ln -s "$REPO_DIR/skills/wiggum" "$SKILL_DIR"
 
 echo ""
-echo "Installed:"
+echo "✅ Installed:"
 echo "  Repo:  $REPO_DIR"
 echo "  Skill: $SKILL_DIR -> $(readlink "$SKILL_DIR")"
 echo ""
