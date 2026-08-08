@@ -5,3 +5,6 @@
 ## 2024-10-18 - [Avoid useless cat pipes in loops]
 **Learning:** Using a `cat file | cmd` pipe inside a loop spawns unnecessary subshells and processes for `cat` in every iteration, causing measurable overhead.
 **Action:** Always use input redirection (`cmd < file`) instead of piping `cat` output, especially inside loops, to optimize shell script execution.
+## 2024-11-20 - [Avoid LLM calls for CLI auth checks]
+**Learning:** Using `claude -p "ok"` to check if the Claude CLI is authenticated actually sends a prompt to the LLM, resulting in a slow network roundtrip (2-3 seconds) and unnecessary token usage. The author mistakenly believed `-p` was a fast version check.
+**Action:** Always verify local credential files (`credentials.json`) or environment variables (like `ANTHROPIC_API_KEY`) to perform instantaneous, offline authentication checks instead of invoking expensive CLI commands that trigger API calls.

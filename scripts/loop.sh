@@ -36,10 +36,12 @@ if ! command -v claude &>/dev/null; then
   exit 1
 fi
 
-# 3. Auth check (fast — just ask for version with -p)
-if ! claude -p "ok" --output-format text &>/dev/null 2>&1; then
+# 3. Auth check (fast — file/env check)
+# ⚡ Bolt: Replaced expensive LLM API call (claude -p) with instantaneous local credential check
+CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
+if [ ! -f "$CLAUDE_DIR/.credentials.json" ] && [ ! -f "$CLAUDE_DIR/credentials.json" ] && [ -z "${ANTHROPIC_API_KEY:-}" ] && [ -z "${CLAUDE_API_KEY:-}" ]; then
   echo "ERROR: Claude CLI is not authenticated."
-  echo "Run: claude /login"
+  echo "Run: claude /login or set ANTHROPIC_API_KEY"
   exit 1
 fi
 
