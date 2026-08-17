@@ -106,7 +106,9 @@ done
 
 DOCKER_ARGS+=(
   wiggumnator-sandbox
-  bash -c "./loop.sh $*"
+  # 🛡️ Sentinel: Fixed command injection vulnerability by avoiding 'bash -c' with string interpolation.
+  "./loop.sh"
+  "$@"
 )
 
 docker "${DOCKER_ARGS[@]}"
