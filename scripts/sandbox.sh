@@ -106,7 +106,8 @@ done
 
 DOCKER_ARGS+=(
   wiggumnator-sandbox
-  bash -c "./loop.sh $*"
+  # 🛡️ Sentinel: Removed dangerous bash -c execution
+  ./loop.sh "$@"
 )
 
 docker "${DOCKER_ARGS[@]}"
