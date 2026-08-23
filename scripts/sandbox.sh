@@ -45,8 +45,10 @@ echo ""
 
 # --- Build a minimal container ---
 
-DOCKERFILE=$(mktemp)
-cat > "$DOCKERFILE" <<'DOCKER'
+echo "Building sandbox image..."
+# ⚡ Bolt: skip Docker build context upload by piping Dockerfile via stdin
+# ⚡ Bolt: pipe heredoc directly to docker build to avoid disk I/O from mktemp
+docker build -t wiggumnator-sandbox - --quiet <<'DOCKER'
 FROM node:22-slim
 
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
@@ -58,11 +60,6 @@ RUN useradd -m -s /bin/bash wiggum
 USER wiggum
 WORKDIR /home/wiggum/project
 DOCKER
-
-echo "Building sandbox image..."
-# ⚡ Bolt: skip Docker build context upload by piping Dockerfile via stdin
-docker build -t wiggumnator-sandbox - < "$DOCKERFILE" --quiet
-rm -f "$DOCKERFILE"
 
 # --- Find credentials file ---
 
