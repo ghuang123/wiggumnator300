@@ -16,7 +16,7 @@ ITERATION=0
 
 # 1. Root check: --dangerously-skip-permissions is blocked for root in Claude Code
 if [ "$(id -u)" -eq 0 ]; then
-  echo "ERROR: Running as root is not supported."
+  echo "❌ ERROR: Running as root is not supported."
   echo ""
   echo "Claude Code blocks --dangerously-skip-permissions for the root user."
   echo "Options:"
