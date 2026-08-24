@@ -106,7 +106,8 @@ done
 
 DOCKER_ARGS+=(
   wiggumnator-sandbox
-  bash -c "./loop.sh $*"
+  # 🛡️ Sentinel: Fix command injection by using array expansion instead of string interpolation
+  ./loop.sh "$@"
 )
 
 docker "${DOCKER_ARGS[@]}"
