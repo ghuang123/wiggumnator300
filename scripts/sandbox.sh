@@ -85,6 +85,8 @@ echo ""
 
 DOCKER_ARGS=(
   run --rm
+  # ⚡ Bolt: Use --init to run tini inside the container, preventing zombie process buildup and optimizing process table memory
+  --init
   --name "$CONTAINER_NAME"
   -v "$PROJECT_DIR:/home/wiggum/project"
 )
