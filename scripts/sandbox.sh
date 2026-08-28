@@ -84,7 +84,7 @@ echo "Starting sandbox..."
 echo ""
 
 DOCKER_ARGS=(
-  run --rm
+  run --rm --init
   --name "$CONTAINER_NAME"
   -v "$PROJECT_DIR:/home/wiggum/project"
 )
@@ -104,9 +104,11 @@ for var in ANTHROPIC_API_KEY CLAUDE_API_KEY; do
   fi
 done
 
+# 🛡️ Sentinel: Fixed command injection vulnerability by avoiding 'bash -c' and passing arguments securely
 DOCKER_ARGS+=(
   wiggumnator-sandbox
-  bash -c "./loop.sh $*"
+  "./loop.sh"
+  "$@"
 )
 
 docker "${DOCKER_ARGS[@]}"
