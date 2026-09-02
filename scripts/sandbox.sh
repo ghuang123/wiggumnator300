@@ -106,7 +106,8 @@ done
 
 DOCKER_ARGS+=(
   wiggumnator-sandbox
-  bash -c "./loop.sh $*"
+  # 🛡️ Sentinel: Prevent command injection by passing arguments directly instead of through bash -c string expansion
+  bash "./loop.sh" "$@"
 )
 
 docker "${DOCKER_ARGS[@]}"
