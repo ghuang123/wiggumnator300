@@ -85,6 +85,8 @@ echo ""
 
 DOCKER_ARGS=(
   run --rm
+  # ⚡ Bolt: include --init to run an init process (like tini) to properly reap zombie processes during long-running loops and prevent process table exhaustion
+  --init
   --name "$CONTAINER_NAME"
   -v "$PROJECT_DIR:/home/wiggum/project"
 )
