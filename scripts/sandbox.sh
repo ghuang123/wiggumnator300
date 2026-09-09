@@ -100,7 +100,8 @@ fi
 # Pass through any API keys that might be set
 for var in ANTHROPIC_API_KEY CLAUDE_API_KEY; do
   if [ -n "${!var:-}" ]; then
-    DOCKER_ARGS+=(-e "$var=${!var}")
+    # 🛡️ Sentinel: Use -e "$var" instead of -e "$var=${!var}" to prevent leaking API keys in the host process list (ps aux)
+    DOCKER_ARGS+=(-e "$var")
   fi
 done
 
