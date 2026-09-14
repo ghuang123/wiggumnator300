@@ -85,6 +85,7 @@ echo ""
 
 DOCKER_ARGS=(
   run --rm
+  --init # ⚡ Bolt: prevent zombie process accumulation
   --name "$CONTAINER_NAME"
   -v "$PROJECT_DIR:/home/wiggum/project"
 )
