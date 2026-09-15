@@ -85,6 +85,8 @@ echo ""
 
 DOCKER_ARGS=(
   run --rm
+  # ⚡ Bolt: Use --init to run an init process and reap zombie processes in long-running container loops
+  --init
   --name "$CONTAINER_NAME"
   -v "$PROJECT_DIR:/home/wiggum/project"
 )
