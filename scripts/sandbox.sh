@@ -100,7 +100,8 @@ fi
 # Pass through any API keys that might be set
 for var in ANTHROPIC_API_KEY CLAUDE_API_KEY; do
   if [ -n "${!var:-}" ]; then
-    DOCKER_ARGS+=(-e "$var=${!var}")
+    # 🛡️ Sentinel: Pass environment variables by name only to prevent secret exposure in the host process list (ps aux)
+    DOCKER_ARGS+=(-e "$var")
   fi
 done
 
