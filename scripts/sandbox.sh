@@ -84,7 +84,8 @@ echo "Starting sandbox..."
 echo ""
 
 DOCKER_ARGS=(
-  run --rm
+  run --rm --init
+  # ⚡ Bolt: Include --init flag to properly reap zombie processes in long-running loops
   --name "$CONTAINER_NAME"
   -v "$PROJECT_DIR:/home/wiggum/project"
 )
