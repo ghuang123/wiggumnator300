@@ -100,7 +100,8 @@ fi
 # Pass through any API keys that might be set
 for var in ANTHROPIC_API_KEY CLAUDE_API_KEY; do
   if [ -n "${!var:-}" ]; then
-    DOCKER_ARGS+=(-e "$var=${!var}")
+    # 🛡️ Sentinel: Inherit environment variables to prevent API keys from appearing in the host process list
+    DOCKER_ARGS+=(-e "$var")
   fi
 done
 
