@@ -5,3 +5,6 @@
 ## 2024-10-18 - [Avoid useless cat pipes in loops]
 **Learning:** Using a `cat file | cmd` pipe inside a loop spawns unnecessary subshells and processes for `cat` in every iteration, causing measurable overhead.
 **Action:** Always use input redirection (`cmd < file`) instead of piping `cat` output, especially inside loops, to optimize shell script execution.
+## 2026-10-04 - [Prevent Process Table Exhaustion in Docker Sandbox]
+**Learning:** Long-running loops inside a Docker container without an init process can cause process table exhaustion because zombie processes aren't reaped properly.
+**Action:** Always include the `--init` flag in `docker run` arguments for containers executing long-running scripts or loops.
