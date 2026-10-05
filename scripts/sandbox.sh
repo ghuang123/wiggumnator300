@@ -98,9 +98,10 @@ if [ -n "$SETTINGS_FILE" ]; then
 fi
 
 # Pass through any API keys that might be set
+# 🛡️ Sentinel: Inherit environment variables directly to prevent exposing API keys in the process list via ps aux.
 for var in ANTHROPIC_API_KEY CLAUDE_API_KEY; do
   if [ -n "${!var:-}" ]; then
-    DOCKER_ARGS+=(-e "$var=${!var}")
+    DOCKER_ARGS+=(-e "$var")
   fi
 done
 
