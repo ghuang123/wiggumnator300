@@ -5,3 +5,6 @@
 ## 2024-10-18 - [Avoid useless cat pipes in loops]
 **Learning:** Using a `cat file | cmd` pipe inside a loop spawns unnecessary subshells and processes for `cat` in every iteration, causing measurable overhead.
 **Action:** Always use input redirection (`cmd < file`) instead of piping `cat` output, especially inside loops, to optimize shell script execution.
+## 2024-10-19 - [Add --init flag for container process reaping]
+**Learning:** The wiggumnator300 loop architecture launches Claude CLI repeatedly inside a long-running Docker sandbox. Without an init process, zombie processes from these repeated executions accumulate and exhaust the process table, leading to measurable performance degradation over time.
+**Action:** Always include the --init flag in docker run arguments for long-running scripts or loops like sandbox.sh to ensure an init process properly reaps zombie processes.
