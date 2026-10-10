@@ -84,7 +84,8 @@ echo "Starting sandbox..."
 echo ""
 
 DOCKER_ARGS=(
-  run --rm
+  # ⚡ Bolt: Use --init to run an init process (like tini) inside the container to properly reap zombie processes and prevent process table exhaustion during long-running loops
+  run --rm --init
   --name "$CONTAINER_NAME"
   -v "$PROJECT_DIR:/home/wiggum/project"
 )
