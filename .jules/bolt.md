@@ -5,3 +5,6 @@
 ## 2024-10-18 - [Avoid useless cat pipes in loops]
 **Learning:** Using a `cat file | cmd` pipe inside a loop spawns unnecessary subshells and processes for `cat` in every iteration, causing measurable overhead.
 **Action:** Always use input redirection (`cmd < file`) instead of piping `cat` output, especially inside loops, to optimize shell script execution.
+## 2024-10-25 - [Prevent Process Table Exhaustion in Long-Running Containers]
+**Learning:** The Wiggumnator loop runs an autonomous agent that can spawn many sub-processes inside the Docker sandbox over many iterations. Without an init process, these zombie processes are not reaped, leading to process table exhaustion over long runs, which slows down or halts execution.
+**Action:** Always include the `--init` flag in `docker run` commands for long-running environments like `scripts/sandbox.sh` to ensure zombie processes are properly reaped and memory footprint stays low.
