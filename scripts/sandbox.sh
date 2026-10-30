@@ -84,7 +84,7 @@ echo "Starting sandbox..."
 echo ""
 
 DOCKER_ARGS=(
-  run --rm
+  run --rm --init # ⚡ Bolt: reap zombie processes to prevent PID exhaustion
   --name "$CONTAINER_NAME"
   -v "$PROJECT_DIR:/home/wiggum/project"
 )
