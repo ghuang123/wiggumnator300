@@ -1,0 +1,4 @@
+## 2024-05-24 - Secure Environment Variable Passing to Docker
+**Vulnerability:** API keys (ANTHROPIC_API_KEY, CLAUDE_API_KEY) were passed to docker run using explicit value injection (`-e "$var=${!var}"`). This exposes the sensitive values directly on the command line, making them visible to any user on the host system via process listing tools like `ps aux` or `top`.
+**Learning:** In bash scripts, dynamically passing sensitive values by interpolating them into command line arguments risks process list exposure. Docker's `-e` flag supports a secure inheritance mode where only the variable name is provided, and Docker reads the value from the host environment without it appearing in the process arguments.
+**Prevention:** When passing environment variables to Docker, use `-e "$var"` to inherit from the environment rather than `-e "$var=$VALUE"`. This ensures sensitive data remains in the process environment rather than the command line arguments.
