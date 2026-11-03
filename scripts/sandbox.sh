@@ -84,7 +84,7 @@ echo "Starting sandbox..."
 echo ""
 
 DOCKER_ARGS=(
-  run --rm
+  run --rm --init
   --name "$CONTAINER_NAME"
   -v "$PROJECT_DIR:/home/wiggum/project"
 )
