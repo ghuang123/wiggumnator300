@@ -77,8 +77,8 @@ fi
 
 # Verify prompt file exists
 if [ ! -f "$PROMPT_FILE" ]; then
-  echo "Error: $PROMPT_FILE not found in current directory."
-  echo "Run /wiggum in Claude Code first to set up your project."
+  echo "❌ Error: $PROMPT_FILE not found in current directory."
+  echo "💡 Run /wiggum in Claude Code first to set up your project."
   exit 1
 fi
 
