@@ -84,7 +84,9 @@ echo "Starting sandbox..."
 echo ""
 
 DOCKER_ARGS=(
-  run --rm
+  # ⚡ Bolt: Added --init to prevent zombie processes and process table exhaustion over long runs
+  # Expected impact: Prevents progressive memory/CPU degradation in long-lived sandbox sessions
+  run --rm --init
   --name "$CONTAINER_NAME"
   -v "$PROJECT_DIR:/home/wiggum/project"
 )
