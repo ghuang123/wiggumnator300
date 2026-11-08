@@ -83,8 +83,10 @@ fi
 echo "Starting sandbox..."
 echo ""
 
+# ⚡ Bolt: Use --init to prevent zombie process accumulation and PID table exhaustion
+# Expected impact: Maintains stable memory/CPU profile during unlimited iteration loops
 DOCKER_ARGS=(
-  run --rm
+  run --rm --init
   --name "$CONTAINER_NAME"
   -v "$PROJECT_DIR:/home/wiggum/project"
 )
