@@ -85,6 +85,9 @@ echo ""
 
 DOCKER_ARGS=(
   run --rm
+  # ⚡ Bolt: Use --init to prevent zombie process accumulation and process table exhaustion in long-running loops
+  # Expected Impact: Maintains stable performance and prevents container crashes over time
+  --init
   --name "$CONTAINER_NAME"
   -v "$PROJECT_DIR:/home/wiggum/project"
 )
